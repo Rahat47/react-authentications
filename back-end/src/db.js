@@ -4,7 +4,8 @@ let client;
 
 export const initializeDbConnection = async () => {
     try {
-        client = await MongoClient.connect('mongodb://localhost:27017', {
+        const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.og4lf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+        client = await MongoClient.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
