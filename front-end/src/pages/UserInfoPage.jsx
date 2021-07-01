@@ -7,7 +7,7 @@ export const UserInfoPage = () => {
     const [token, setToken] = useToken();
     const user = useUser();
 
-    const { id, email, info } = user;
+    const { id, email, info, isVerified } = user;
     const history = useHistory();
 
     // These states are bound to the values of the text inputs
@@ -52,6 +52,7 @@ export const UserInfoPage = () => {
             setShowSuccessMessage(true);
         } catch (error) {
             setShowErrorMessage(true);
+            console.log(error.response.data);
         }
     };
 
@@ -69,6 +70,11 @@ export const UserInfoPage = () => {
     return (
         <div className="content-container">
             <h1>Info for {email}</h1>
+            {!isVerified && (
+                <div className="fail">
+                    You need to verify your email before you can make changes
+                </div>
+            )}
             {showSuccessMessage && (
                 <div className="success">Successfully saved user data!</div>
             )}
@@ -96,7 +102,9 @@ export const UserInfoPage = () => {
                 <input onChange={e => setBio(e.target.value)} value={bio} />
             </label>
             <hr />
-            <button onClick={saveChanges}>Save Changes</button>
+            <button disabled={!isVerified} onClick={saveChanges}>
+                Save Changes
+            </button>
             <button onClick={resetValues}>Reset Values</button>
             <button onClick={logOut}>Log Out</button>
         </div>

@@ -32,7 +32,11 @@ export const updateUserInfo = {
                     message: "Unable to verify token"
                 })
 
-                const { id } = decoded
+                const { id, isVerified: verified } = decoded
+
+                if (!verified) return res.status(403).json({
+                    message: "You need to verify your email. Before you can update your data"
+                })
 
                 if (id !== userId) return res.status(403).json({
                     message: "Not allowed to update that user Data"
