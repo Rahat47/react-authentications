@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-
+import { useToken } from "../auth/useToken";
+import axios from "axios";
 const LoginPage = () => {
+    const [token, setToken] = useToken();
+
     const [errorMessage, setErrorMessage] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -9,7 +12,21 @@ const LoginPage = () => {
     const history = useHistory();
 
     const onLogInClicked = async () => {
-        alert("Login not implemented yet");
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/api/login",
+                {
+                    email,
+                    password,
+                }
+            );
+
+            const { token } = response.data;
+            setToken(token);
+            history.push("/");
+        } catch (error) {
+            setErrorMessage(error.response.data);
+        }
     };
 
     return (

@@ -3,10 +3,17 @@ import { useToken } from "./useToken"
 
 export const useUser = () => {
     const [token] = useToken()
+
+
+    const getPayloadFromToken = (token) => {
+        const encodedToken = token.split(".")[1]
+
+        return JSON.parse(atob(encodedToken))
+    }
+
     const [user, setUser] = useState(() => {
         if (!token) return null
-        getPayloadFromToken(token)
-
+        return getPayloadFromToken(token)
     })
 
     useEffect(() => {
@@ -16,11 +23,6 @@ export const useUser = () => {
 
     }, [token])
 
-    const getPayloadFromToken = (token) => {
-        const encodedToken = token.split(".")[1]
-
-        return JSON.parse(atob(encodedToken))
-    }
 
 
     return user
