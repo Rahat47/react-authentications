@@ -8,9 +8,6 @@ export const UserInfoPage = () => {
     const user = useUser();
 
     const { id, email, info } = user;
-
-    // We'll use the history to navigate the user
-    // programmatically later on (we're not using it yet)
     const history = useHistory();
 
     // These states are bound to the values of the text inputs
@@ -21,15 +18,9 @@ export const UserInfoPage = () => {
     const [hairColor, setHairColor] = useState(info.hairColor || "");
     const [bio, setBio] = useState(info.bio || "");
 
-    // These state variables control whether or not we show
-    // the success and error message sections after making
-    // a network request (see JSX below).
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-    // This useEffect hook automatically hides the
-    // success and error messages after 3 seconds when they're shown.
-    // Just a little user interface improvement.
     useEffect(() => {
         if (showSuccessMessage || showErrorMessage) {
             setTimeout(() => {
@@ -40,9 +31,6 @@ export const UserInfoPage = () => {
     }, [showSuccessMessage, showErrorMessage]);
 
     const saveChanges = async () => {
-        // Send a request to the server to
-        // update the user's info with any changes we've
-        // made to the text input values
         try {
             const response = await axios.patch(
                 `http://localhost:5000/api/users/${id}`,
@@ -78,7 +66,6 @@ export const UserInfoPage = () => {
         setBio(info.bio);
     };
 
-    // And here we have the JSX for our component. It's pretty straightforward
     return (
         <div className="content-container">
             <h1>Info for {email}</h1>
