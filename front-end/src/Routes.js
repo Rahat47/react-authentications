@@ -4,6 +4,7 @@ import LoginPage from './pages/loginPage';
 import SignUpPage from './pages/SignupPage';
 import PrivateRoute from './auth/PrivateRoute';
 import VerifyEmailPage from './pages/VerifyEmailPage';
+import EmailVerificationLanding from './pages/EmailVerificationLanding';
 export const Routes = () => {
     return (
         <Router>
@@ -23,6 +24,10 @@ export const Routes = () => {
                 <PrivateRoute path="/please-verify" exact>
                     <VerifyEmailPage />
                 </PrivateRoute>
+
+                <Route path={`/verify-email/:verificationString`}>
+                    <EmailVerificationLanding />
+                </Route>
             </Switch>
         </Router>
     );
