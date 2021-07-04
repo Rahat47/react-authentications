@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useToken } from "../auth/useToken";
 import axios from "axios";
 const LoginPage = () => {
-    const [token, setToken] = useToken();
+    const [, setToken] = useToken();
 
     const [errorMessage, setErrorMessage] = useState("");
     const [email, setEmail] = useState("");
